@@ -306,6 +306,15 @@
                 <li><b>درجة الخطورة:</b> <span class="badge badge-danger">Critical</span> <span class="badge badge-warning">Medium</span></li>
                 <li><b>التوصية العلاجية:</b> خطوات محددة لسد الثغرة.</li>
             </ul>
+            <h3>تفاصيل حساب نسبة المخاطر (Risk Score)</h3>
+            <p>حساب الـRisk Score بيتم بشكل واضح على مراحل: تجميع نقاط الـFindings ثم تصنيف النتيجة لفئة خطر.</p>
+            <ol>
+                <li><b>مصادر الـFindings:</b> Open Ports خطرة، مشاكل SSL/TLS، Credential Breaches، Outdated Software، Vulnerabilities إضافية، Sensitive/Exposed Paths.</li>
+                <li><b>أوزان الـSeverity (النقاط):</b> low = 2، medium = 8، high = 20، critical = 35 .</li>
+                <li><b>تصنيف النتيجة:</b> 75+ = Critical، من 50 إلى 74 = High، من 25 إلى 49 = Medium، أقل من 25 = Low.</li>
+                <li><b>أمثلة سريعة:</b> 1 critical + 2 high = 75 ⇒ Critical، و 3 medium + 1 low = 26 ⇒ Medium.</li>
+                <li><b>تنبيه إضافي:</b> تنبيه <code>High Risk Email</code> يتبعت لما السكور يكون <code>>= 70</code>.</li>
+            </ol>
         </div>
 
         <div class="section-card">
@@ -623,6 +632,15 @@
                 <li><b>درجة الخطورة:</b> <span class="badge badge-danger">Critical</span> <span class="badge badge-warning">Medium</span></li>
                 <li><b>التوصية العلاجية:</b> خطوات محددة لسد الثغرة.</li>
             </ul>
+            <h3>تفاصيل حساب نسبة المخاطر (Risk Score)</h3>
+            <p>حساب الـRisk Score بيتم بشكل واضح على مراحل: تجميع نقاط الـFindings ثم تصنيف النتيجة لفئة خطر.</p>
+            <ol>
+                <li><b>مصادر الـFindings:</b> Open Ports خطرة، مشاكل SSL/TLS، Credential Breaches، Outdated Software، Vulnerabilities إضافية، Sensitive/Exposed Paths.</li>
+                <li><b>أوزان الـSeverity (النقاط):</b> low = 2، medium = 8، high = 20، critical = 35 .</li>
+                <li><b>تصنيف النتيجة:</b> 75+ = Critical، من 50 إلى 74 = High، من 25 إلى 49 = Medium، أقل من 25 = Low.</li>
+                <li><b>أمثلة سريعة:</b> 1 critical + 2 high = 75 ⇒ Critical، و 3 medium + 1 low = 26 ⇒ Medium.</li>
+                <li><b>تنبيه إضافي:</b> تنبيه <code>High Risk Email</code> يتبعت لما السكور يكون <code>>= 70</code>.</li>
+            </ol>
         </div>
 
         <div class="section-card">
