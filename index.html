@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="الدليل التقني الشامل لمنصة CyberGuard لمراقبة الأمن السيبراني، إدارة المخاطر، واكتشاف الثغرات والتسريبات.">
-    <meta name="keywords" content="CyberGuard, الأمن السيبراني, فحص الثغرات, إدارة المخاطر, مراقبة التسريبات, SaaS">
-    <meta name="author" content="CyberGuard Engineering Team">
-    <meta name="theme-color" content="#0f172a">
-    <title>CyberGuard | الدليل التقني المتكامل للمنصة</title>
+    <meta name="description" content="دليل منصة CyberGuard - الشرح المبسط والتقني">
+    <title>CyberGuard | كيف يعمل النظام</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
 
@@ -39,11 +36,7 @@
 
         * {
             box-sizing: border-box;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        html {
-            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
         body {
@@ -52,7 +45,7 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.7;
+            line-height: 1.8;
             overflow-x: hidden;
         }
 
@@ -70,39 +63,30 @@
             padding: 40px 20px;
         }
 
-        .nav-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            position: sticky;
-            top: 20px;
-            z-index: 1000;
-            margin-bottom: 60px;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-area h1 {
-            font-size: 1.8rem;
+        .header h1 {
+            font-size: 3.5rem;
             font-weight: 900;
-            margin: 0;
+            margin-bottom: 10px;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: 'Outfit', sans-serif;
         }
 
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
         .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-main);
@@ -120,468 +104,485 @@
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        .hero {
-            text-align: center;
-            padding: 60px 0;
-            position: relative;
+        /* Tabs Styles */
+        .tabs-container {
+            margin-top: 20px;
         }
 
-        .hero h2 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 820px;
-            margin: 0 auto 40px;
-        }
-
-        .badge-group {
+        .tab-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--primary);
-        }
-
-        .section-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px;
             margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 15px 40px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-color: var(--primary);
+            background: var(--gradient);
+            box-shadow: 0 10px 20px -5px var(--primary-glow);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Content Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
         }
 
-        .section-card::before {
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
             right: 0;
-            width: 100%;
-            height: 4px;
+            width: 5px;
+            height: 100%;
             background: var(--gradient);
         }
 
-        h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 30px;
+        .card h2 {
+            font-size: 1.8rem;
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .feature-item {
-            background: var(--bg-deep);
-            border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 20px;
-        }
-
-        .feature-item h4 {
-            color: var(--accent);
-            margin: 0 0 15px 0;
-            font-size: 1.2rem;
+            margin-top: 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .feature-item p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .workflow {
-            display: flex;
-            flex-direction: column;
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        .step {
-            display: flex;
-            gap: 25px;
-            padding: 20px;
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .tab-buttons { flex-direction: column; }
+        }
+
+        .info-box {
             background: var(--bg-deep);
-            border-radius: 18px;
-            align-items: flex-start;
-        }
-
-        .step-num {
-            background: var(--gradient);
-            color: white;
-            min-width: 45px;
-            height: 45px;
+            padding: 20px;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px var(--primary-glow);
+            border: 1px solid var(--border);
         }
 
-        .step-content h5 {
-            margin: 0 0 5px 0;
-            font-size: 1.1rem;
+        .info-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--border);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin: 5px;
+            font-weight: bold;
             color: var(--text-main);
         }
 
-        .step-content p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        .severity-critical { color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); }
+        .severity-high { color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.1); }
+        .severity-medium { color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1); }
+        .severity-low { color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1); }
+
+        ul {
+            padding-right: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
         }
 
-        .spec-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: right;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .sev {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .sev-critical { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
-        .sev-high { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; }
-        .sev-medium { background: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid #3b82f6; }
-        .sev-low { background: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid #10b981; }
-
-        .tech-tag {
-            display: inline-block;
-            margin: 5px;
-            padding: 5px 12px;
-            background: var(--border);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-family: 'Outfit', sans-serif;
-            color: var(--text-muted);
+        li ul {
+            margin-top: 8px;
+            margin-bottom: 12px;
         }
 
         code {
-            background: #1e293b;
-            color: #38bdf8;
+            background: var(--bg-deep);
             padding: 2px 6px;
             border-radius: 4px;
-            font-family: monospace;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
         }
 
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
+        .info-box p {
+            margin: 0;
+            line-height: 1.6;
         }
 
-        @media (max-width: 768px) {
-            .hero h2 { font-size: 2.2rem; }
-            .nav-header { flex-direction: column; gap: 20px; }
-            .section-card { padding: 25px; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate {
-            animation: fadeIn 0.8s ease forwards;
+        .info-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
         }
     </style>
 </head>
-
 <body data-theme="dark">
     <div class="bg-glow"></div>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">☀️</span> الوضع النهاري
+    </button>
 
     <div class="container">
-        <nav class="nav-header">
-            <div class="logo-area">
-                <img src="logo.png" alt="CyberGuard Logo" style="height: 40px; border-radius: 8px;">
-                <h1>CyberGuard</h1>
-            </div>
-            <div style="display: flex; gap: 15px;">
-                <button class="theme-toggle" onclick="toggleTheme()">
-                    <span id="theme-icon">☀️</span>
-                    <span id="theme-text">الوضع النهاري</span>
-                </button>
-            </div>
-        </nav>
+        <div class="header">
+            <h1>CyberGuard</h1>
+            <p>منصة شاملة لمراقبة الأمن السيبراني وإدارة المخاطر واكتشاف الثغرات</p>
+        </div>
 
-        <section class="hero animate">
-            <div class="badge-group animate" style="margin-bottom: 20px;">
-                <span class="badge">منصة أمن سيبراني سحابية</span>
-                <span class="badge">إدارة ثغرات ومخاطر</span>
-                <span class="badge">تشغيل آلي وتنبيهات ذكية</span>
+        <div class="tabs-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('simple')">الشرح المبسط للجميع</button>
+                <button class="tab-btn" onclick="switchTab('technical')">الشرح التقني المتعمق</button>
             </div>
-            <h2>رؤية أوضح لسطح الهجوم الرقمي</h2>
-            <p>منصة CyberGuard تجمع بين الفحص الأمني، مراقبة التسريبات، تقييم المخاطر، وإعداد التقارير الاحترافية لمساعدة الفرق على اكتشاف التهديدات مبكرًا واتخاذ قرارات أسرع وأكثر دقة.</p>
-        </section>
 
-        <section class="section-card animate" id="overview">
-            <h3><span>🛡️</span> نظرة عامة على المنصة</h3>
-            <p>تعمل <b>CyberGuard</b> كمنصة مركزية لمراقبة الأمن السيبراني على مستوى المؤسسة، وتوفر رؤية شاملة للنطاقات والأصول الخارجية ونقاط الضعف والتعرضات المحتملة، مع بنية Microservices تدعم التوسع وسرعة المعالجة.</p>
+            <!-- Tab 1: Simple Explanation -->
+            <div id="simple" class="tab-content active">
+                <div class="card">
+                    <h2>🛡️ ما هو نظام CyberGuard؟ (ببساطة)</h2>
+                    <p>تخيل أن <strong>CyberGuard</strong> هو حارس أمن ذكي يعمل على مدار الساعة لشركتك على الإنترنت. بدلاً من فحص الأبواب والنوافذ الحقيقية، يقوم هذا الحارس بفحص مواقع شركتك، الخوادم، وأنظمتها بحثاً عن أي "أبواب مفتوحة" أو "أقفال ضعيفة" قد يستغلها اللصوص (المخترقون).</p>
+                </div>
 
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h4>الفحص الاستباقي</h4>
-                    <p>تنفيذ فحوصات دورية ومجدولة للنطاقات والنطاقات الفرعية والخدمات المكشوفة لرصد التغيرات الأمنية فور حدوثها.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>تقييم المخاطر الذكي</h4>
-                    <p>تحويل النتائج التقنية إلى درجة مخاطر واضحة تساعد الفرق الإدارية والفنية على ترتيب الأولويات واتخاذ القرار.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>استخبارات التهديدات</h4>
-                    <p>الاستفادة من مصادر خارجية مثل VirusTotal, urlscan.io, AlienVault لإضافة سياق أمني أوسع حول الهدف.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>اكتشاف الأصول ورسم الخريطة</h4>
-                    <p>حصر النطاقات والأصول الظاهرة والخدمات المفتوحة لبناء صورة أدق لسطح الهجوم الخارجي الخاص بالمؤسسة.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>الاستطلاع البصري</h4>
-                    <p>التقاط لقطات شاشة للموقع والأصول النشطة لتوثيق الحالة الفعلية وإضافة دليل بصري داخل التقارير.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>تحليل التقنيات المستخدمة</h4>
-                    <p>اكتشاف أنظمة إدارة المحتوى والأطر البرمجية وتقنيات الخوادم لمساعدة الفرق على ربط الإصدارات بالثغرات المحتملة.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-card animate" id="features">
-            <h3><span>🚀</span> المميزات والأدوات المدمجة</h3>
-            <div class="workflow">
-                <div class="feature-item">
-                    <h4>1. محرك الفحص المتعدد</h4>
-                    <p>تعتمد المنصة على مجموعة من الأدوات المتخصصة لتغطية أكثر من نوع من الفحص والتحليل:</p>
-                    <div style="margin-top: 15px;">
-                        <span class="tech-tag">Nuclei</span>
-                        <span class="tech-tag">Nikto</span>
-                        <span class="tech-tag">Sqlmap</span>
-                        <span class="tech-tag">Nmap</span>
-                        <span class="tech-tag">Retire.js</span>
-                        <span class="tech-tag">فحص المسارات الحساسة</span>
-                        <span class="tech-tag">استطلاع بصري باللقطات</span>
+                <div class="card">
+                    <h2>🔍 كيف يعمل الفحص؟ (آلية العمل)</h2>
+                    <div class="grid-2">
+                        <div class="info-box">
+                            <h3>1. الاستكشاف الخارجي</h3>
+                            <p>الحارس يبدأ بالبحث عن كل ما يخص شركتك على الإنترنت (مواقع فرعية، خوادم مخفية) ليحدد حجم المبنى الذي يحتاج لحراسة.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>2. فحص الأبواب (المنافذ)</h3>
+                            <p>يتأكد من أن الأبواب المخصصة للموظفين فقط مغلقة بإحكام وليست متروكة مفتوحة للعامة.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>3. التفتيش الدقيق للثغرات</h3>
+                            <p>يبحث عن أي أخطاء برمجية، ملفات سرية متروكة بالخطأ (مثل كلمات المرور)، أو برامج قديمة يسهل اختراقها.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>4. مراقبة التسريبات</h3>
+                            <p>لا يكتفي بفحص شركتك من الداخل، بل يذهب للأسواق السوداء ليرى إذا كان هناك أي بريد إلكتروني أو رقم سري خاص بموظفيك قد تم تسريبه للبيع.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="feature-item">
-                    <h4>2. مراقبة تسريبات الهوية</h4>
-                    <p>فحص البريدات المرتبطة بالمؤسسة ضد قواعد بيانات التسريبات العامة لاكتشاف أي حسابات أو بيانات اعتماد تم تسريبها.</p>
+                <div class="card">
+                    <h2>📊 كيف يقيّم النظام الخطورة؟</h2>
+                    <p>بعد الانتهاء من الفحص، يعطيك النظام "تقريراً صحياً" بدرجة من 100 بناءً على خوارزمية موزونة. كلما زادت الدرجة، زاد الخطر:</p>
+                    <ul>
+                        <li><span class="tag severity-critical">حرج جداً (75-100 نقطة)</span>: وجدنا باباً مفتوحاً بالكامل مع مفتاح الخزينة. (مثال: قواعد بيانات مفتوحة للعامة مثل MongoDB 27017، Redis 6379، أو تسريبات هويات بكلمات مرور واضحة، أو ملفات .env مكشوفة). يتم إرسال تنبيه طارئ فوراً للإدارة!</li>
+                        <li><span class="tag severity-high">عالي الخطورة (50-74 نقطة)</span>: أقفال قديمة جداً، شهادات SSL منتهية، منافذ RDP/SMB مفتوحة للإنترنت، أو استخدام مفاتيح تشفير ضعيفة.</li>
+                        <li><span class="tag severity-medium">متوسط الخطورة (25-49 نقطة)</span>: نوافذ تحتاج لبعض الصيانة مثل نقص بعض التشفيرات الثانوية أو كوكيز غير مؤمنة.</li>
+                        <li><span class="tag severity-low">منخفض الخطورة (5-24 نقطة)</span>: معلومات إدارية بسيطة أو ملفات غير حساسة مكشوفة.</li>
+                    </ul>
                 </div>
 
-                <div class="feature-item" style="border-right: 4px solid var(--accent);">
-                    <h4>3. التقارير الفنية الشاملة</h4>
-                    <p>إعداد تقارير تتضمن وصف الثغرات، الأدلة، مستوى الخطورة، وخطوات المعالجة، مع عرض مناسب للفرق الفنية والإدارية.</p>
+                <div class="card">
+                    <h2>🧠 الأدوات الذكية المدمجة</h2>
+                    <p>يستخدم CyberGuard مجموعة متنوعة من الأدوات والخدمات المتخصصة:</p>
+                    <ul>
+                        <li><strong>فحص المنافذ (Port Scanner):</strong> يفحص 50+ منفذ شائع للخدمات الخطرة مثل FTP (21), Telnet (23), RDP (3389), VNC (5900), Redis (6379), MySQL (3306), MongoDB (27017) والمزيد.</li>
+                        <li><strong>فحص SSL/TLS:</strong> التحقق من صلاحية الشهادات، ضعف التشفيرات، وسلسلة الثقة باستخدام Node.js TLS و ssl-checker.</li>
+                        <li><strong>اكتشاف النطاقات الفرعية:</strong> يجمع البيانات من 5 مصادر: crt.sh, HackerTarget, Anubis, ThreatMiner، بالإضافة لقوائم brute-force للنطاقات الشائعة.</li>
+                        <li><strong>فحص الثغرات (Vulnerability Scanning):</strong>
+                            <ul>
+                                <li><strong>Nuclei:</strong> اكتشاف ثغرات XSS, SQL Injection, CVEs المعروفة</li>
+                                <li><strong>Nikto:</strong> فحص خوادم الويب وتحديد الملفات الخطيرة</li>
+                                <li><strong>Sqlmap:</strong> اكتشاف ثغرات الحقن في قواعد البيانات</li>
+                                <li><strong>Retire.js:</strong> كشف المكتبات البرمجية القديمة والمنتهية الدعم</li>
+                            </ul>
+                        </li>
+                        <li><strong>فحص الكشف عن المعلومات:</strong> البحث عن ملفات .env, .git/config, package.json, phpinfo.php, وملفات النسخ الاحتياطية (.zip, .sql, .bak).</li>
+                        <li><strong>فحص الأسرار (Secret Scanner):</strong> يكتشف 30+ نوع من المفاتيح: AWS Access Keys, OpenAI API Keys, Stripe Keys, Twilio Keys, GitHub Tokens, وغيرها.</li>
+                        <li><strong>الاستخبارات الخارجية (Threat Intelligence):</strong> تكامل مع VirusTotal, Shodan, AlienVault, UrlScan.io للحصول على بيانات استخباراتية.</li>
+                        <li><strong>مراقبة التسريبات:</strong> التحقق من تسريبات البريد الإلكتروني عبر Have I Been Pwned (HIBP) و DeHashed.</li>
+                        <li><strong>اكتشاف التقنيات (Tech Detection):</strong> يتعرف على 70+ تقنية: WordPress, Next.js, React, Laravel, Django, Nginx, Apache, Cloudflare، وغيرها.</li>
+                    </ul>
                 </div>
 
-                <div class="feature-item">
-                    <h4>4. الجدولة الذكية والتنبيهات</h4>
-                    <p>فحوصات يومية أو أسبوعية مع تنبيهات عند اكتمال الفحص، أو عند اكتشاف تسريب جديد، أو عند ارتفاع مستوى المخاطر، مع ملخصات أسبوعية.</p>
+                <div class="card">
+                    <h2>⭐ ما الذي يجعله مميزاً عن الأنظمة الأخرى؟</h2>
+                    <ul>
+                        <li><strong>الكل في مكان واحد (All-in-One):</strong> بدلاً من استخدام 10+ أدوات منفصلة، النظام يدمج كل شيء ويربط النتائج ببعضها.</li>
+                        <li><strong>تكامل الاستخبارات متعدد المصادر:</strong> يجمع بيانات من 4+ مصادر استخباراتية خارجية مع نظام fallback محلي.</li>
+                        <li><strong>نظام تقييم المخاطر الذكي:</strong> خوارزمية موزونة تضع وزناً مختلفاً لكل نوع من الثغرات (Critical=35, High=20, Medium=8, Low=2).</li>
+                        <li><strong>التقاط صور تلقائي:</strong> يستخدم Puppeteer لالتقاط لقطات شاشة للخدمات المكتشفة كدليل بصري.</li>
+                        <li><strong>تنبيهات فورية متعددة القنوات:</strong> إشعارات عبر البريد الإلكتروني، التقارير الأسبوعية التلقائية، وتنبيهات عالية الخطورة.</li>
+                        <li><strong>تقارير احترافية متعددة الصيغ:</strong> PDF, Word (DOCX), Excel مع دعم كامل للغة العربية (RTL).</li>
+                        <li><strong>جدولة ذكية:</strong> فحوصات يومية/أسبوعية تلقائية باستخدام node-cron.</li>
+                        <li><strong>حماية ذاتية (Self-Protection):</strong> حماية SSRF لمنع استهداف الشبكات الداخلية، rate limiting، Helmet، JWT.</li>
+                        <li><strong>دعم متعدد اللغات:</strong> عربي/إنجليزي كامل مع ترجمة مخصصة للمصطلحات الأمنية.</li>
+                    </ul>
                 </div>
 
-                <div class="feature-item">
-                    <h4>5. تحكم الإدارة والسوبر أدمن</h4>
-                    <p>لوحات إدارية لإدارة الشركات والمستخدمين، تشغيل الفحوصات يدويًا، متابعة صحة النظام، والتحكم في خصائص المنصة.</p>
+                <div class="card">
+                    <h2>🗂️ هيكل المشروع والمكونات</h2>
+                    <p>يتكون النظام من 4 وحدات رئيسية (Workspaces):</p>
+                    <ul>
+                        <li><strong>/app (Next.js Frontend):</strong> واجهة المستخدم الرسومية باستخدام Next.js 16, TypeScript, Tailwind CSS, DaisyUI.</li>
+                        <li><strong>/scanner-service (Backend API):</strong> خدمة Express.js المسؤولة عن إدارة الفحوصات والمهام.</li>
+                        <li><strong>/worker (Background Worker):</strong> معالج BullMQ للمهام الثقيلة التي تعمل في الخلفية.</li>
+                        <li><strong>/shared (Shared Components):</strong> الأنواع المشتركة (Types) والأدوات المشتركة بين الوحدات.</li>
+                    </ul>
                 </div>
             </div>
-        </section>
 
-        <section class="section-card animate" id="operations">
-            <h3><span>📋</span> العمليات والأدلة</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h4>تقارير متعددة الصيغ</h4>
-                    <p>توليد وتصدير تقارير أمنية بصيغ PDF وExcel وWord مع ملخصات تنفيذية ونتائج فنية وأدلة بصرية.</p>
+            <!-- Tab 2: Technical Explanation -->
+            <div id="technical" class="tab-content">
+                <div class="card">
+                    <h2>⚙️ المعمارية التقنية (Backend Architecture)</h2>
+                    <p>نظام CyberGuard مبني على بنية الخدمات المصغرة (Microservices) لضمان التوسع وعدم التوقف:</p>
+                    <ul>
+                        <li><strong>Frontend:</strong> Next.js 16 مع TypeScript, Tailwind CSS, DaisyUI للتصميم، Recharts للرسوم البيانية.</li>
+                        <li><strong>Backend API:</strong> Express.js مع TypeScript، Helmet للحماية، Express Rate Limit للحد من الطلبات.</li>
+                        <li><strong>Database:</strong> MongoDB (Mongoose ODM) لتخزين نتائج الفحوصات والشركات.</li>
+                        <li><strong>Queue System:</strong> Redis + BullMQ لإدارة طوابير المهام (Queues) وتنظيم العمليات الثقيلة بشكل غير متزامن.</li>
+                        <li><strong>Authentication:</strong> JWT (JSON Web Tokens) مع Bcryptjs لتشفير كلمات المرور.</li>
+                        <li><strong>Reporting:</strong> PDFKit (PDF), ExcelJS (Excel), docx (Word) مع دعم RTL للعربية.</li>
+                        <li><strong>Scheduling:</strong> node-cron للفحوصات الدورية التلقائية.</li>
+                        <li><strong>Email:</strong> Nodemailer مع SMTP للإشعارات والتنبيهات.</li>
+                    </ul>
                 </div>
-                <div class="feature-item">
-                    <h4>تجربة ثنائية اللغة</h4>
-                    <p>دعم العربية والإنجليزية في لوحة التحكم والتقارير مع مراعاة اتجاهي العرض RTL وLTR.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>المصادقة الثنائية وأمان الجلسات</h4>
-                    <p>دعم 2FA، ومتابعة الجلسات النشطة، وإلغاء الجلسات الأخرى لتعزيز الحماية ومنع الوصول غير المصرح به.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>إشعارات البريد ولوحة التحكم</h4>
-                    <p>تنبيهات فورية عبر البريد الإلكتروني وداخل لوحة التحكم عند اكتشاف تعرضات جديدة أو تغيرات مهمة في مستوى المخاطر.</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="section-card animate" id="how-it-works">
-            <h3><span>⚙️</span> آلية العمل وكشف المعلومات</h3>
-            <p>تمر عملية الفحص داخل CyberGuard بعدة مراحل مترابطة لجمع المعلومات وتحليلها وإخراجها في صورة عملية قابلة للتنفيذ:</p>
-
-            <div class="workflow">
-                <div class="step">
-                    <div class="step-num">1</div>
-                    <div class="step-content">
-                        <h5>الاستطلاع وجمع المعلومات</h5>
-                        <p>فحص DNS واكتشاف النطاقات الفرعية وجمع المعلومات الأولية حول البنية المعروضة على الإنترنت.</p>
+                <div class="card">
+                    <h2>🛠️ الأدوات التقنية المدمجة (Integration Engine)</h2>
+                    <p>يعمل محرك الفحص <code>scannerEngine.ts</code> كمايسترو يدير مجموعة قوية من الأدوات (20+ خدمة):</p>
+                    <div class="grid-2">
+                        <div class="info-box">
+                            <h3>🔍 أدوات الفحص النشط (Active Scanners)</h3>
+                            <p>
+                                <span class="tag">Nuclei</span>: فحص XSS, SQLi مع 6 دقائق timeout، JSON output<br>
+                                <span class="tag">Nikto</span>: فحص CGI, directories, configurations مع 5 دقائق timeout<br>
+                                <span class="tag">Sqlmap</span>: اكتشاف SQL injection<br>
+                                <span class="tag">Port Scanner</span>: فحص 50+ منفذ شائع (chunk size 15 للتوازي)<br>
+                                <span class="tag">Directory Scan</span>: 100+ مسار حساس (.env, .git, backups)<br>
+                                <span class="tag">Secret Scanner</span>: 30+ regex patterns للمفاتيح (AWS, Stripe, OpenAI...)
+                            </p>
+                        </div>
+                        <div class="info-box">
+                            <h3>🛰️ الاستخبارات والفحص السلبي</h3>
+                            <p>
+                                <span class="tag">crt.sh</span>: Certificate Transparency logs<br>
+                                <span class="tag">HackerTarget</span>: Subdomain enumeration API<br>
+                                <span class="tag">Anubis</span>: Subdomain discovery<br>
+                                <span class="tag">ThreatMiner</span>: Threat intelligence<br>
+                                <span class="tag">VirusTotal</span>: Domain intelligence API<br>
+                                <span class="tag">Shodan</span>: Internet scanner integration<br>
+                                <span class="tag">AlienVault OTX</span>: Threat intelligence<br>
+                                <span class="tag">UrlScan.io</span>: URL analysis
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div class="info-box">
+                            <h3>🔐 أدوات الأمان والتشفير</h3>
+                            <p>
+                                <span class="tag">SSL Checker</span>: Node.js TLS + ssl-checker library<br>
+                                <span class="tag">DNS Analyzer</span>: SPF, DMARC, DKIM validation<br>
+                                <span class="tag">Header Analyzer</span>: CSP, HSTS, X-Frame-Options...<br>
+                                <span class="tag">Cookie Analyzer</span>: HttpOnly, Secure, SameSite flags<br>
+                                <span class="tag">Retire.js</span>: Outdated JavaScript libraries<br>
+                                <span class="tag">WHOIS</span>: Domain registration info
+                            </p>
+                        </div>
+                        <div class="info-box">
+                            <h3>🔎 اكتشاف التقنيات (Fingerprinting)</h3>
+                            <p>
+                                <span class="tag">Tech Detection</span>: 70+ تقنية (WordPress, Next.js, React...)<br>
+                                <span class="tag">Web Server</span>: Nginx, Apache, IIS detection<br>
+                                <span class="tag">CMS</span>: WordPress, Drupal, Joomla...<br>
+                                <span class="tag">Frameworks</span>: Laravel, Django, Express, Spring...<br>
+                                <span class="tag">E-commerce</span>: Shopify, WooCommerce, Magento...<br>
+                                <span class="tag">CDN/Cloud</span>: Cloudflare, AWS, Vercel, Netlify...
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-num">2</div>
-                    <div class="step-content">
-                        <h5>اكتشاف الخدمات والمنافذ</h5>
-                        <p>تحديد المنافذ المفتوحة والخدمات المعروضة وإظهار أي خدمات عالية الخطورة أو مكشوفة للعامة.</p>
+
+                <div class="card">
+                    <h2>🔄 آلية العمل التقنية المتقدمة (Workflow)</h2>
+                    <div class="grid-2">
+                        <div class="info-box">
+                            <h3>1. الاستخبارات المسبقة (IntelligenceOrchestrator)</h3>
+                            <p>جمع بيانات سلبية (Passive) من VirusTotal, Shodan, AlienVault, UrlScan.io. يستخدم Redis cache لمدة 24 ساعة لتجنب طلبات API مكررة.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>2. حماية SSRF</h3>
+                            <p>يرفض الفحص أي استهداف لـ localhost, 127.0.0.1, 192.168.x.x, 10.x.x.x, 172.16.x.x لمنع Server-Side Request Forgery.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>3. التنفيذ المتوازي والمتسلسل</h3>
+                            <p><strong>Phase 1 (Parallel):</strong> DNS, Headers, Whois, Cookies, Tech Detection تتم بـ <code>Promise.allSettled</code> (10 ثوانٍ).<br>
+                            <strong>Phase 2 (Sequential):</strong> Nuclei → Nikto → Sqlmap (Heavy Fuzzers) لتجنب OOM/CPU spikes.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>4. فحص المنافذ المتقدم</h3>
+                            <p>فحص 50+ منفذ مع Banner Grabbing و Service Fingerprinting. يصنف الخدمات الخطرة تلقائياً (FTP, Telnet, RDP, Redis, MongoDB, MySQL).</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>5. اكتشاف النطاقات الفرعية</h3>
+                            <p>5 مصادر متوازية: crt.sh, HackerTarget, Anubis, ThreatMiner, + Brute-force. DNS resolution للتحقق من النطاقات النشطة.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>6. فحص أمني شامل (Web Security)</h3>
+                            <p>7 رؤوس أمان مطلوبة: CSP, HSTS, X-Frame-Options, X-XSS-Protection, X-Content-Type-Options, Referrer-Policy, Permissions-Policy.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>7. فحص الأسرار (Secret Detection)</h3>
+                            <p>30+ أنماط Regex: AWS Keys, OpenAI, Stripe, Twilio, GitHub, Hugging Face, Cloudinary, DigitalOcean, Fly.io... مع Context Validation.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>8. الالتقاط البصري (Screenshot)</h3>
+                            <p>Puppeteer Headless Chrome للتقاط صور للخدمات المكتشفة (صور PNG base64) كدليل بصري.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>9. التقييم والتنبيهات</h3>
+                            <p>خوارزمية Risk Scoring (0-100) مع أوزان: Critical=35, High=20, Medium=8, Low=2. تنبيهات فورية عند >70 نقطة.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>10. التقارير والتصدير</h3>
+                            <p>PDFKit, ExcelJS, docx مع دعم RTL Arabic. تقارير PDF تحتوي على شعار الشركة، الرسوم البيانية، وجداول الثغرات.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    <div class="step-content">
-                        <h5>فحص الثغرات والمسارات الحساسة</h5>
-                        <p>فحص قوالب الثغرات، كشف الملفات الحساسة مثل <code>.env</code>، واكتشاف المسارات الإدارية أو النسخ الاحتياطية المكشوفة.</p>
+
+                <div class="card">
+                    <h2>🛡️ أمان النظام نفسه (System Security)</h2>
+                    <div class="grid-2">
+                        <div class="info-box">
+                            <h3>المصادقة والتفويض</h3>
+                            <p>JWT (JSON Web Tokens) مع Bcryptjs لتشفير كلمات المرور. صلاحيات متعددة: Admin, User.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>حماية الواجهات (API Protection)</h3>
+                            <p>Helmet.js للحماية من XSS, Clickjacking, MIME sniffing. Express Rate Limit (100 طلب/15 دقيقة).</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>فصل البيانات (Multi-tenancy)</h3>
+                            <p>عزل كامل للبيانات بناءً على companyId - كل شركة ترى نتائجها فقط.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>حماية SSRF</h3>
+                            <p>فلترة عناوين IP الداخلية: localhost, 127.0.0.1, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>تشفير البيانات</h3>
+                            <p>تشفير AES-256-GCM لبيانات التسريبات (Breach Data) باستخدام BREACH_DATA_KEY.</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>CORS Protection</h3>
+                            <p>تكوين CORS صارم يسمح بالوصول فقط من النطاقات المصرح بها.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-num">4</div>
-                    <div class="step-content">
-                        <h5>تحليل السلوك والحماية</h5>
-                        <p>تحليل الرؤوس الأمنية والكوكيز وتحويلات الروابط وتقنيات الموقع ومؤشرات الإفصاح أو التسريب.</p>
+
+                <div class="card">
+                    <h2>🎯 خوارزمية تقييم المخاطر (Risk Scoring Algorithm)</h2>
+                    <p>تعمل خوارزمية <code>calculateRiskScore</code> في <code>/shared/utils/index.ts</code> بالأوزان التالية:</p>
+                    <ul>
+                        <li><span class="tag severity-critical">Critical: 35 نقطة</span> - MongoDB (27017), Redis (6379), Telnet (23), .env files, AWS Keys exposed, credential breaches</li>
+                        <li><span class="tag severity-high">High: 20 نقطة</span> - RDP (3389), VNC (5900), MySQL (3306), PostgreSQL (5432), SMB (445), SSL expired, weak ciphers</li>
+                        <li><span class="tag severity-medium">Medium: 8 نقاط</span> - Missing CSP header, missing DMARC, domain expiring soon, cookies without HttpOnly</li>
+                        <li><span class="tag severity-low">Low: 2 نقطة</span> - Server header leak, X-Powered-By leak, missing X-XSS-Protection</li>
+                    </ul>
+                    <p><strong>آلية التصنيف:</strong></p>
+                    <ul>
+                        <li>Critical (75-100): وجود أي ثغرة Critical + احتساب إضافي للـ High والـ Medium</li>
+                        <li>High (50-74): وجود ثغرات High + احتساب Medium و Low</li>
+                        <li>Medium (25-49): وجود ثغرات Medium فقط</li>
+                        <li>Low (5-24): وجود ثغرات Low فقط</li>
+                    </ul>
+                    <p>إذا وصلت الدرجة ≥ 75، يُطلق <code>notifyHighRisk</code> فوراً لإرسال تنبيه عاجل.</p>
+                </div>
+
+                <div class="card">
+                    <h2>📋 الموديلات والهياكل البيانية (Database Schema)</h2>
+                    <div class="grid-2">
+                        <div class="info-box">
+                            <h3>ScanResult</h3>
+                            <p>ports[], ssl, subdomains[], vulnerabilities[], securityHeaders[], dns, whois, technologies[], cookies[], discoveredPaths[], outdatedSoftware[]</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>RiskAssessment</h3>
+                            <p>companyId, scanId, score (0-100), category (Low/Medium/High/Critical), findings[]</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>BreachRecord</h3>
+                            <p>companyId, email, breachName, breachDate, dataClasses[], source (hibp/dehashed), severity</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>Company</h3>
+                            <p>name, domain, emailDomains[], users[], createdAt, updatedAt</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>Vulnerability</h3>
+                            <p>title, description, severity (info/low/medium/high/critical), source, location, snippet, recommendation</p>
+                        </div>
+                        <div class="info-box">
+                            <h3>User</h3>
+                            <p>email, password (bcrypt), role (admin/user), companyId, createdAt</p>
+                        </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-num">5</div>
-                    <div class="step-content">
-                        <h5>الاستطلاع البصري والتوثيق</h5>
-                        <p>التقاط صور مرئية للأصول النشطة وإرفاقها بالنتائج لدعم التحقق السريع والتوثيق الفني.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-num">6</div>
-                    <div class="step-content">
-                        <h5>التنبيه وإخراج التقارير</h5>
-                        <p>إرسال الإشعارات، حساب المخاطر، وتجهيز المخرجات في صورة تقارير واضحة مع توصيات وأولويات للمعالجة.</p>
-                    </div>
+
+                <div class="card">
+                    <h2>🚀 نشر والتشغيل (Deployment)</h2>
+                    <ul>
+                        <li><strong>Docker:</strong> Dockerfile متاح مع multi-stage build.</li>
+                        <li><strong>Fly.io:</strong> fly.toml موجود للنشر السريع.</li>
+                        <li><strong>Redis:</strong> Redis Cloud أو self-hosted.</li>
+                        <li><strong>MongoDB:</strong> MongoDB Atlas أو self-hosted.</li>
+                        <li><strong>Environment Variables:</strong> MONGODB_URI, JWT_SECRET, REDIS_URL, HIBP_API_KEY, DEHASHED_API_KEY, SMTP_HOST, VIRUSTOTAL_API_KEY, SHODAN_API_KEY...</li>
+                    </ul>
                 </div>
             </div>
-        </section>
-
-        <section class="section-card animate" id="scoring">
-            <h3><span>📊</span> محرك حساب المخاطر</h3>
-            <p>تعتمد المنصة على خوارزمية موزونة لحساب درجة المخاطر النهائية بناءً على نوع النتائج وخطورتها وتأثيرها المحتمل على المؤسسة.</p>
-
-            <div class="spec-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>مستوى الخطورة</th>
-                            <th>الوزن</th>
-                            <th>أمثلة</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="sev sev-critical">Critical</span></td>
-                            <td>35 نقطة</td>
-                            <td>تسريب بيانات اعتماد، ملف <code>.env</code> مكشوف، خدمة عالية الخطورة متاحة للعامة.</td>
-                        </tr>
-                        <tr>
-                            <td><span class="sev sev-high">High</span></td>
-                            <td>20 نقطة</td>
-                            <td>شهادة SSL منتهية، قواعد بيانات مكشوفة، منافذ إدارية متاحة خارجيًا.</td>
-                        </tr>
-                        <tr>
-                            <td><span class="sev sev-medium">Medium</span></td>
-                            <td>8 نقاط</td>
-                            <td>لوحات تحكم مكشوفة، نقص سجلات حماية البريد، إصدارات تقنية قديمة.</td>
-                        </tr>
-                        <tr>
-                            <td><span class="sev sev-low">Low</span></td>
-                            <td>2 نقطة</td>
-                            <td>بعض Security Headers المفقودة أو إعدادات كوكيز تحتاج تحسين.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div style="margin-top: 30px; padding: 20px; background: var(--bg-deep); border-radius: 15px;">
-                <h5 style="margin: 0 0 10px 0; color: var(--accent);">تصنيف النتيجة النهائية (0 - 100)</h5>
-                <ul style="margin: 0; padding-right: 20px; font-size: 0.9rem;">
-                    <li><span class="sev sev-critical">Critical</span>: إذا كانت الدرجة 75 فأكثر.</li>
-                    <li><span class="sev sev-high">High</span>: من 50 إلى 74.</li>
-                    <li><span class="sev sev-medium">Medium</span>: من 25 إلى 49.</li>
-                    <li><span class="sev sev-low">Low</span>: أقل من 25.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section-card animate" id="backend">
-            <h3><span>🔒</span> أمان النظام والـ Backend</h3>
-            <p>تم تصميم CyberGuard مع ضوابط أمنية لحماية البيانات والجلسات وواجهات البرمجة وعمليات الوصول الإدارية.</p>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h4>حماية الاتصالات والجلسات</h4>
-                    <p>استخدام <b>TLS</b> لحماية الاتصالات و <b>JWT</b> لإدارة الجلسات مع معالجة آمنة لكلمات المرور وحماية أفضل للحسابات.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>حماية واجهات البرمجة</h4>
-                    <p>تفعيل <b>Rate Limiting</b> و <b>Helmet</b> و <b>CORS</b> لتقليل مخاطر إساءة الاستخدام وتأمين طبقة الـ API.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>نظام الصلاحيات</h4>
-                    <p>فصل واضح للصلاحيات بين المستخدم العادي ومدير الشركة والسوبر أدمن لضبط الوصول إلى البيانات والعمليات الحساسة.</p>
-                </div>
-                <div class="feature-item">
-                    <h4>ضوابط الهوية والوصول</h4>
-                    <p>دعم 2FA، إدارة الجلسات النشطة، وإلغاء الجلسات الأخرى لتقليل احتمالات الوصول غير المصرح به.</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <div style="margin-bottom: 20px;">
-                <img src="logo.png" alt="Logo" style="height: 30px; opacity: 0.5;">
-            </div>
-            <p>© 2026 CyberGuard Platform - جميع الحقوق محفوظة لفريق الهندسة والأمن.</p>
-            <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-muted);">إصدار النظام: 2.4.0</p>
-        </footer>
+        </div>
     </div>
 
     <script>
@@ -592,27 +593,24 @@
             body.setAttribute('data-theme', newTheme);
 
             const icon = document.getElementById('theme-icon');
-            const text = document.getElementById('theme-text');
-
             if (newTheme === 'light') {
                 icon.innerText = '🌙';
-                text.innerText = 'الوضع الليلي';
+                icon.nextSibling.textContent = ' الوضع الليلي';
             } else {
                 icon.innerText = '☀️';
-                text.innerText = 'الوضع النهاري';
+                icon.nextSibling.textContent = ' الوضع النهاري';
             }
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, { threshold: 0.1 });
+        function switchTab(tabId) {
+            // إزالة الكلاس active من كل الأزرار والمحتوى
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-        document.querySelectorAll('.section-card').forEach((card) => observer.observe(card));
+            // إضافة الكلاس active للتاب المحدد
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
     </script>
 </body>
 </html>
-    
